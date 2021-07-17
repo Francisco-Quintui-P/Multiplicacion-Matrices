@@ -53,8 +53,9 @@ int main()
     
     if(columnasA == filasB){
         AsignarValores(MatrizA, "MatrizA");
+        cout<<"\n";
         AsignarValores(MatrizB, "MatrizB");
-    
+        cout<<"\n";
         vector<vector<double>> a = MultiplicarMatrices(MatrizA, MatrizB, filasA, columnasB, filasB);
         MostrarMatriz(a);
 
