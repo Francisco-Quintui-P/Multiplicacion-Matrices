@@ -58,14 +58,6 @@ int main()
         vector<vector<double>> a = MultiplicarMatrices(MatrizA, MatrizB, filasA, columnasB, filasB);
         MostrarMatriz(a);
 
-    }else if(filasA == columnasB){
-        AsignarValores(MatrizA, "MatrizA");
-        AsignarValores(MatrizB, "MatrizB");
-    
-        vector<vector<double>> a = MultiplicarMatrices(MatrizA, MatrizB, filasB, columnasA, filasA);
-
-        MostrarMatriz(a);
-        
     }else{
         cout<<"No es posible multiplicar las matrices";
         return 0;
