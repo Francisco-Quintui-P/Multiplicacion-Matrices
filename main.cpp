@@ -3,45 +3,74 @@
 
 using namespace std;
 
-vector<vector<double>> ConstruirMatriz(int nFilas, int nColumnas)
-{
-    vector<vector<double>> v(nFilas,vector<double>(nColumnas, 0));
-    return v;
+
+
+vector<vector<double>> ConstruirMatriz(double nFilas, double nColumnas){
+    return vector<vector<double>>(nFilas, vector<double>(nColumnas, 0));
 }
 
-void LeerMatriz(vector<vector<double>>& Matriz)//Paso por parametro matriz como una referencia para que pueda ser modificado en el interior
-{
-    for(size_t f = 0; f<Matriz.size(); ++f)
-    {
-        for(size_t c = 0; c<Matriz[f].size(); ++c)
-        {
-            cout<< "Matriz["<<f<<"]["<<c<<"]:";
-            cin >> Matriz[f][c];//le asigno valores a la posicion en (c,f) de la matriz
+void AsignarValores(vector<vector<double>>& M, string Matriz){
+    for(int f = 0; f<M.size(); f++){
+        for(int c = 0; c<M[f].size(); c++){
+            cout<<Matriz<<"["<<f<<"]["<<c<<"]";
+            cin >> M[f][c];
         }
-        cout << endl;
     }
 }
-void MostrarMatriz(vector<vector<double>>& Matriz)//muestro la matriz con sus nuevos valores
-{
-    for(auto p : Matriz)
-    {
-        for(auto s : p)
-        {
-            cout << s;
+
+vector<vector<double>> MultiplicarMatrices(vector<vector<double>>& mA, vector<vector<double>>& mB, double N, double M, double P){
+    vector<vector<double>> result = ConstruirMatriz(N, M);
+
+    for (int i=0; i<N; i++){
+        for (int j=0; j<M; j++)  {
+            for (int k=0; k<P; k++){
+                result[i][j] += mA[i][k] * mB[k][j];
+            }
         }
-        cout<<endl;
+    }
+    return result;
+}
+
+
+void MostrarMatriz(vector<vector<double>>& MatrizResultado){
+    for(auto f : MatrizResultado){
+        for(auto c : f){
+            cout<<c<<" ";
+        }cout<<"\n";
     }
 }
 
 int main()
 {
-    int filas, columnas;
-    cout << "N filas: "; cin>> filas;
-    cout << "N columnas: "; cin>> columnas;
-    vector<vector<double>> Matriz = ConstruirMatriz(filas, columnas);//asigno a la variable matriz del tipo vector<vector>
-    //el valor que me trae la función ConstuirMatriz con los parametros dados
-    LeerMatriz(Matriz);
-    MostrarMatriz(Matriz);
+    double filasA, columnasA, filasB, columnasB;
+    cout << "N filas Matriz A: "; cin>> filasA;
+    cout << "N columnas Matriz A: "; cin>> columnasA;
+    vector<vector<double>> MatrizA = ConstruirMatriz(filasA, columnasA);
 
+    cout << "N filas Matriz B: "; cin>> filasB;
+    cout << "N columnas Matriz B: "; cin>> columnasB;
+    vector<vector<double>> MatrizB = ConstruirMatriz(filasB, columnasB);
+    
+    if(columnasA == filasB){
+        AsignarValores(MatrizA, "MatrizA");
+        AsignarValores(MatrizB, "MatrizB");
+    
+        vector<vector<double>> a = MultiplicarMatrices(MatrizA, MatrizB, filasA, columnasB, filasB);
+        MostrarMatriz(a);
+
+    }else if(filasA == columnasB){
+        AsignarValores(MatrizA, "MatrizA");
+        AsignarValores(MatrizB, "MatrizB");
+    
+        vector<vector<double>> a = MultiplicarMatrices(MatrizA, MatrizB, filasB, columnasA, filasA);
+
+        MostrarMatriz(a);
+        
+    }else{
+        cout<<"No es posible multiplicar las matrices";
+        return 0;
+    }
+    
+    
     return 0;
 }
